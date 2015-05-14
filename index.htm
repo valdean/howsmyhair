@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>getUserMedia Demo 1</title>
+<title>How's My Hair?</title>
 <style>
 video {
-    border:5px solid black;
+    border:3px solid black;
     width:480px;
     height:360px;
 }
@@ -12,12 +12,25 @@ button {
     font: 18px sans-serif;
     padding: 8px;
 }
+h1 {
+	font: 64px sans-serif;
+	text-align: center;
+	font-weight: bold;
+	text-shadow: 3px 3px 3px #00FF00;
+}
+h2 {
+	font: 20px sans-serif;
+	text-align: center;
+}
 </style>
 </head>
 <body>
-<video id="vid" autoplay="true"></video>
-<br>
-<button id="btn" onclick="start()">Start</button>
+<h1>How's My Hair?</h1>
+<h2>The web's #1 utility for checking your hair.</h2>
+<center>
+	<video id="vid" autoplay="true"></video>
+	<br>
+	<button id="btn" onclick="start()">Check Hair</button>
 <script>
 video = document.getElementById("vid");
 function start() {
@@ -28,6 +41,11 @@ function gotStream(stream) {
   video.src = webkitURL.createObjectURL(stream);
 }
 </script>
+<br/>
+<br/>
+<p>Privacy guarantee: <b>Your hair is safe.</b> This image is not stored, saved, shown, or otherwise displayed to anyone but you.</p>
+</center>
+
 </body>
 </html>
 
