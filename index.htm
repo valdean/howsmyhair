@@ -4,9 +4,10 @@
 <title>How's My Hair?</title>
 <style>
 video {
-    border:3px solid black;
-    width:480px;
-    height:360px;
+    border: 3px solid black;
+    width: 480px;
+    height: 360px;
+    background-color: #333; /* Added a background for when the stream is loading */
 }
 button {
     font: 18px sans-serif;
@@ -28,24 +29,46 @@ h2 {
 <h1>How's My Hair?</h1>
 <h2>The web's #1 utility for checking your hair.</h2>
 <center>
-	<video id="vid" autoplay="true"></video>
+	<video id="vid" autoplay playsinline></video>
 	<br>
-	<button id="btn" onclick="start()">Check Hair</button>
+	<button id="btn" onclick="startWebcam()">Check Hair</button>
 <script>
-video = document.getElementById("vid");
-function start() {
-  navigator.webkitGetUserMedia({video:true}, gotStream, function() {}); 
-  btn.disabled = true;
-}
-function gotStream(stream) {
-  video.src = webkitURL.createObjectURL(stream);
+// Get references to the HTML elements
+const videoElement = document.getElementById("vid");
+const buttonElement = document.getElementById("btn");
+
+// This function handles the entire webcam startup process
+async function startWebcam() {
+  // Disable the button to prevent multiple clicks
+  buttonElement.disabled = true;
+
+  // Check if the browser supports the required API
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    try {
+      // 1. Request access to the webcam
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: true 
+      });
+
+      // 2. Attach the webcam stream to the video element
+      // THIS IS THE KEY FIX: Use srcObject, not URL.createObjectURL()
+      videoElement.srcObject = stream;
+
+    } catch (error) {
+      // Log the error and alert the user
+      console.error("Error accessing the webcam:", error);
+      alert("Could not access the webcam. Please ensure you grant permission and are not using another app with the camera.");
+      buttonElement.disabled = false; // Re-enable button on error
+    }
+  } else {
+    alert("Sorry, your browser does not support the webcam API.");
+  }
 }
 </script>
 <br/>
 <br/>
-<p>Privacy guarantee: <b>Your hair is safe.</b> This image is not stored, saved, shown, or otherwise displayed to anyone but you.</p>
+<p>Privacy guarantee: <b>Your hair is safe.</b> This image is not saved, shown, or otherwise displayed to anyone but you.</p>
 </center>
 
 </body>
 </html>
-
