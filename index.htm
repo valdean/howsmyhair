@@ -31,41 +31,36 @@ h2 {
 <center>
 	<video id="vid" autoplay playsinline></video>
 	<br>
-	<button id="btn" onclick="start()">Check Hair</button>
+	<button id="btn" onclick="startWebcam()">Check Hair</button>
 <script>
 // Get references to the HTML elements
-const video = document.getElementById("vid");
-const btn = document.getElementById("btn");
+const videoElement = document.getElementById("vid");
+const buttonElement = document.getElementById("btn");
 
-// This function will be called when the button is clicked
-async function start() {
+// This function handles the entire webcam startup process
+async function startWebcam() {
   // Disable the button to prevent multiple clicks
-  btn.disabled = true;
+  buttonElement.disabled = true;
 
-  // Check if the browser supports the MediaDevices API
+  // Check if the browser supports the required API
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     try {
-      // Request access to the video stream.
-      // This returns a promise that we await.
+      // 1. Request access to the webcam
       const stream = await navigator.mediaDevices.getUserMedia({ 
         video: true 
       });
 
-      // The stream was successfully obtained, so let's use it
-      video.srcObject = stream;
-      // The 'autoplay' attribute should handle this, but it's good practice
-      // to call play() to ensure it starts on all platforms.
-      video.play();
+      // 2. Attach the webcam stream to the video element
+      // THIS IS THE KEY FIX: Use srcObject, not URL.createObjectURL()
+      videoElement.srcObject = stream;
 
     } catch (error) {
-      // The user denied access or another error occurred
-      console.error("Error accessing the webcam: ", error);
-      alert("Could not access the webcam. Please ensure you grant permission in your browser.");
-      // Re-enable the button if access fails so the user can try again
-      btn.disabled = false; 
+      // Log the error and alert the user
+      console.error("Error accessing the webcam:", error);
+      alert("Could not access the webcam. Please ensure you grant permission and are not using another app with the camera.");
+      buttonElement.disabled = false; // Re-enable button on error
     }
   } else {
-    // The browser doesn't support the API
     alert("Sorry, your browser does not support the webcam API.");
   }
 }
