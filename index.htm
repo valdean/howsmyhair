@@ -12,7 +12,7 @@
         text-align: center;
         font-family: sans-serif;
       }
-      
+
       video {
         border: 3px solid black;
         width: 480px;
@@ -36,46 +36,50 @@
     </style>
   </head>
   <body>
-    <h1>How’s My Hair?</h1>
-    <h2>The web’s #1 utility for checking your hair.</h2>
-    <video id="vid" autoplay playsinline></video>
-    <br>
-    <button id="btn" onclick="startWebcam()">Check Hair</button>
-    <script>
-      // Get references to the HTML elements
-      const videoElement = document.getElementById("vid");
-      const buttonElement = document.getElementById("btn");
+    <header>
+      <h1>How’s My Hair?</h1>
+      <h2>The web’s #1 utility for checking your hair.</h2>
+    </header>
+    <main>
+      <video id="vid" autoplay playsinline></video>
+      <br>
+      <button id="btn" onclick="startWebcam()">Check Hair</button>
+      <script>
+        // Get references to the HTML elements
+        const videoElement = document.getElementById("vid");
+        const buttonElement = document.getElementById("btn");
 
-      // This function handles the entire webcam startup process
-      async function startWebcam() {
-        // Disable the button to prevent multiple clicks
-        buttonElement.disabled = true;
+        // This function handles the entire webcam startup process
+        async function startWebcam() {
+          // Disable the button to prevent multiple clicks
+          buttonElement.disabled = true;
 
-        // Check if the browser supports the required API
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-          try {
-            // 1. Request access to the webcam
-            const stream = await navigator.mediaDevices.getUserMedia({ 
-              video: true 
-            });
+          // Check if the browser supports the required API
+          if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            try {
+              // 1. Request access to the webcam
+              const stream = await navigator.mediaDevices.getUserMedia({ 
+                video: true 
+              });
 
-            // 2. Attach the webcam stream to the video element
-            // THIS IS THE KEY FIX: Use srcObject, not URL.createObjectURL()
-            videoElement.srcObject = stream;
+              // 2. Attach the webcam stream to the video element
+              // THIS IS THE KEY FIX: Use srcObject, not URL.createObjectURL()
+              videoElement.srcObject = stream;
 
-          } catch (error) {
-            // Log the error and alert the user
-            console.error("Error accessing the webcam:", error);
-            alert("Could not access the webcam. Please ensure you grant permission and are not using another app with the camera.");
-            buttonElement.disabled = false; // Re-enable button on error
+            } catch (error) {
+              // Log the error and alert the user
+              console.error("Error accessing the webcam:", error);
+              alert("Could not access the webcam. Please ensure you grant permission and are not using another app with the camera.");
+              buttonElement.disabled = false; // Re-enable button on error
+            }
+          } else {
+            alert("Sorry, your browser does not support the webcam API.");
           }
-        } else {
-          alert("Sorry, your browser does not support the webcam API.");
         }
-      }
-    </script>
+      </script>
+    </main>
     <br>
     <br>
-    <p>Privacy guarantee: <b>Your hair is safe.</b> This image is not saved, stored, or otherwise displayed to anyone but you.</p>
+    <footer>Privacy guarantee: <b>Your hair is safe.</b> This image is not saved, stored, or otherwise displayed to anyone but you.</footer>
   </body>
 </html>
