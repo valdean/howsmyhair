@@ -52,12 +52,12 @@
       <h2>The web’s #1 utility for checking your hair.</h2>
     </header>
     <main>
-      <video id="vid" autoplay playsinline></video>
-      <button id="btn" onclick="startWebcam()">Check Hair</button>
+      <video autoplay playsinline></video>
+      <button onclick="startWebcam()">Check Hair</button>
       <script>
         // Get references to the HTML elements
-        const videoElement = document.getElementById("vid");
-        const buttonElement = document.getElementById("btn");
+        const videoElement = document.querySelector("video");
+        const buttonElement = document.querySelector("button");
 
         // This function handles the entire webcam startup process
         async function startWebcam() {
