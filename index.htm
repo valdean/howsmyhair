@@ -11,6 +11,7 @@
       body {
         text-align: center;
         font-family: sans-serif;
+        margin: auto;
       }
 
       video {
@@ -23,6 +24,8 @@
       button {
         font-size: 18px;
         padding: 8px;
+        display: block;
+        margin: auto;
       }
 
       h1 {
@@ -33,6 +36,14 @@
       h2 {
         font-size: 20px;
       }
+
+      main {
+        margin-bottom: 34px;
+      }
+
+      footer {
+        font-family: serif;
+      }
     </style>
   </head>
   <body>
@@ -42,7 +53,6 @@
     </header>
     <main>
       <video id="vid" autoplay playsinline></video>
-      <br>
       <button id="btn" onclick="startWebcam()">Check Hair</button>
       <script>
         // Get references to the HTML elements
@@ -78,8 +88,6 @@
         }
       </script>
     </main>
-    <br>
-    <br>
     <footer>Privacy guarantee: <b>Your hair is safe.</b> This image is not saved, stored, or otherwise displayed to anyone but you.</footer>
   </body>
 </html>
